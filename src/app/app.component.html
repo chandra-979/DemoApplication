@@ -4,8 +4,41 @@
     <form class="form-inline">
       <!-- <button class="btn btn-outline-success my-2 my-sm-0" type="submit" (click)="getSearchBook()">Search</button> -->
     </form>
-    <input class="mr-sm-2" type="input" placeholder="Search" aria-label="Search" [(ngModel)]="value">
-  </nav>
+      </nav>
+
+  <div class="card row">
+    <div class="col-md-8 offset-2">
+      <input class="mr-sm-2" type="input" placeholder="Table Search" aria-label="Search" [(ngModel)]="table_value">
+    </div>
+  </div>
+  <div class="row">
+    
+    <div class="card col-md-8 offset-2">
+        
+      <table class="table table-hover">
+        <tr>
+          <td>PRODUCT NAME</td>
+          <td>RETAIL PRICE</td>
+          <td>DISCOUNTED PRICE</td>
+          <td>DESCRIPTION</td>
+          <td>BRAND</td>
+        </tr>
+        <tr *ngFor="let product of products | filter : table_value | paginate: { id:'pagination2',itemsPerPage: 2, currentPage: table_items }"> 
+          <td>{{product.product_name}}</td>
+          <td>{{product.retail_price}}</td>
+          <td>{{product.discounted_price}}</td>
+          <td>{{product.description}}</td>
+          <td>{{product.brand}}</td>
+        </tr>
+
+      </table>
+    </div>
+    <div class="col-md- 12 offset-2">
+      <pagination-controls id="pagination2" (pageChange)="table_items = $event"></pagination-controls>
+    </div>
+  
+
+  </div>
 
   <!-- <div class="text-danger" *ngIf="errMsg">{{errMsg}}</div> -->
   <div class="row" *ngIf="cart.length>0">
@@ -26,9 +59,13 @@
     
   </div> 
 
-  
+  <div class="card row">
+    <div class="col-md-3 offset-2">
+      <input class="mr-sm-2" type="input" placeholder="Book Search" aria-label="Search" [(ngModel)]="value">
+    </div>
+  </div>
   <div class="row">
-    <div class="col-md-3 col-sm-4 col-lg-3 text-light" *ngFor="let book of books | filter : value | paginate: { itemsPerPage: 12, currentPage: p } ">
+    <div class="col-md-3 col-sm-4 col-lg-3 text-light" *ngFor="let book of books | filter : value | paginate: { id:'pagination1',itemsPerPage: 12, currentPage: p } ">
         <div class="card" 
         style=" 
         background-image: url('https://cdn3.vectorstock.com/i/thumb-large/07/02/bookstore-logo-idea-colorful-books-logotype-in-vector-13590702.jpg');
@@ -47,7 +84,6 @@
     </div>
   </div>  
   <div class="col-md- 12 offset-2">
-    <pagination-controls (pageChange)="p = $event"></pagination-controls>
+    <pagination-controls id="pagination1" (pageChange)="p = $event"></pagination-controls>
   </div>
-  
 </div>

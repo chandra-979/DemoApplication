@@ -1,4 +1,4 @@
-import { BookRepoService } from './book-repo.service';
+import { BookRepoService , Product } from './book-repo.service';
 import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
@@ -13,14 +13,19 @@ export class AppComponent implements OnInit{
   cartcount=1
   orderBy:string='price';
   reverse:boolean=false;
+  products:Product[]=[];
   errMsg;
+  table_value
   value
+  table_items:number=1
   constructor(private service:BookRepoService){
   }
   ngOnInit(): void {
     this.service.getBooks().subscribe(data=>{
       this.books=data
     })
+    this.products=this.service.getCSVData()
+    console.log(this.products)
   }
   addToCart(book)
   {
@@ -52,5 +57,6 @@ export class AppComponent implements OnInit{
     console.log("search function")
     return this.books.filter(x=>{x.bookID===this.value})
   }
+  
   title = 'BooksRepo';
 }
